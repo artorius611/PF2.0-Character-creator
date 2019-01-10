@@ -39,16 +39,16 @@ class Halfling :
             print (choice)
             if choice == '1' :
                 heritage_input = "true"
-                heritage_bonus = self.halfling_heritage['Gutsy']
+                self.heritage_bonus = self.halfling_heritage["Gutsy"]
             elif choice == '2' :
                 heritage_input = "true"
-                heritage_bonus = self.halfling_heritage['Jungle']
+                self.heritage_bonus = self.halfling_heritage['Jungle']
             elif choice == '3' :
                 heritage_input = "true"
-                heritage_bonus = self.halfling_heritage['Nomadic']
+                self.heritage_bonus = self.halfling_heritage['Nomadic']
             elif choice == '4' :
                 heritage_input = "true"
-                heritage_bonus = self.halfling_heritage['Twilight']
+                self.heritage_bonus = self.halfling_heritage['Twilight']
         else:
             print ('\n \nYou selected something invalid\n \n')
         #clear the screen
@@ -79,20 +79,21 @@ while valid_user_input == "false" :
             print ('2) Con')
             print ('3) Int')
             print ('4) Cha')
-            choice = int(input('Which bonus stat do you choose?'))
+            choice = int(input(''))
             print (choice)
+            bonus = 2
             if choice == 1 :
-                bonus_user_input = "true"
-                bonus_user = user_race.strength + Bonus_stat(strength)
+                bonus_user_input = "false"
+                user_race.strength = user_race.strength + bonus
             elif choice == 2 :
-                bonus_user_input = "true"
-                bonus_user = user_race.constitution + Bonus_stat(constitution)
+                bonus_user_input = "false"
+                user_race.constitution = user_race.constitution + bonus
             elif choice == 3 :
-                bonus_user_input = "true"
-                bonus_user = user_race.intelligence + Bonus_stat(intelligence)
+                bonus_user_input = "false"
+                user_race.intelligence = user_race.intelligence + bonus
             elif choice == 4 :
-                bonus_user_input = "true"
-                bonus_user = user_race.charisma + Bonus_stat(charisma)
+                bonus_user_input = "false"
+                user_race.charisma = user_race.charisma + bonus
             else:
                 print ('\nYou selected something invalid\n')
             # the string below clears the screen
@@ -103,4 +104,4 @@ while valid_user_input == "false" :
     os.system ('cls')
 
 
-print ('Your Health is:', user_race.health, '\nYour Speed is: ', user_race.speed, 'ft. \nYour Stats are:\n STR:', user_race.strength, '\n Dex', user_race.dexterity, '\n Con', user_race.constitution, '\n Int', user_race.intelligence, '\n Wis', user_race.wisdom, '\n Cha', user_race.charisma, '\nYou decided your heritage will be:',  heritage_bonus)
+print ('Your Health is:', user_race.health, '\nYour Speed is: ', user_race.speed, 'ft. \n STR:', user_race.strength, '\n Dex', user_race.dexterity, '\n Con', user_race.constitution, '\n Int', user_race.intelligence, '\n Wis', user_race.wisdom, '\n Cha', user_race.charisma, '\nYour heritage:\n',  user_race.heritage_bonus)
