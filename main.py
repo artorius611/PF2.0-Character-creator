@@ -1,8 +1,8 @@
 import os 
-from pieces import Ancestry
-from pieces import Bonus_stat
-from pieces import Character_Feats
-from pieces import Race_Feats
+from Pieces import Ancestry
+from Pieces import Bonus_stat
+from Pieces import Character_Feats
+from Pieces import Race_Feats
 
 strength = 0
 dexterity = 0
