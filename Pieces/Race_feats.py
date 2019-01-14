@@ -1,5 +1,5 @@
 class Race_feats :
-    def __dict__(self) :
+    def __init__(self) :
         self.Dwarven_feats = {
             'Ancestral Hatred' : 'You have shaped your hatred of ancestral dwarven foes into a powerful weapon. Choose two of the following creature traits: derro, duergar, giant, or orc. You gain a +1 circumstance bonus to damage rolls against creatures with one of the chosen traits. If a creature with a chosen trait critically succeeds at an attack against you, this bonus increases to +4 against that creature for 1 minute. Special Your GM can add appropriate creature traits to this list if your character is from a community that commonly fights other types of enemies.', 
             '''Ancient's Blood''' : 'Trigger You attempt a saving throw against a magical effect. Your ancestors’ innate resistance to magic has manifested in you. You gain a +2 circumstance bonus to the triggering saving throw. Special Your resistance hampers your connection to magic items. Reduce your total Resonance Points by 2 (minimum 0). For more information about Resonance Points, see page 376.',
