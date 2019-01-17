@@ -11,7 +11,8 @@ charisma = 0
 health = 0
 speed = 0
 heritage_bonus = 0
-                    
+dwarf = 0                    
+gimli = 0
 valid_user_input = "false"
 while valid_user_input == "false" :
     print ('\nWhat is your Ancestry?\n')
@@ -24,7 +25,7 @@ while valid_user_input == "false" :
     choice = input('Which Ancestry do you choose? ')
     if choice == '1' :
         valid_user_input = "true"
-        bonus_race = Bonus_stat.Bonus_Stat (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus)
+        bonus_race = Bonus_stat.Bonus_Stat (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus, dwarf, gimli)
     elif choice == '2' :
         valid_user_input = "true"
         user_race = Ancestry.Elf (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus)
