@@ -1,8 +1,6 @@
 import os 
 from Pieces import Ancestry
 from Pieces import Bonus_stat
-from Pieces import Character_Feats
-from Pieces import Race_Feats
 
 strength = 0
 dexterity = 0
@@ -13,7 +11,7 @@ charisma = 0
 health = 0
 speed = 0
 heritage_bonus = 0
-
+                    
 valid_user_input = "false"
 while valid_user_input == "false" :
     print ('\nWhat is your Ancestry?\n')
@@ -152,7 +150,18 @@ while valid_user_input == "false" :
     # the string below clears the screen
     os.system ('cls')
 
-
+valid_user_input = "false"
+while valid_user_input == "false" :
+    print ('\nWhat is your Background?\n')
+    print ('1) Acolyte')
+    print ('2) Acrobat')
+    print ('3) Animal Whisperer')
+    print ('4) Barkeep')
+    print ('5) Blacksmith')
+    print ('6) Criminal')
+    choice = input('Which Background do you choose? ')
+    if choice == '1' :
+        valid_user_input = "true"
 print ('Your Health is:', user_race.health, '\nYour Speed is: ', user_race.speed, 'ft.') 
 print ('STR:', user_race.strength, '\n Dex', user_race.dexterity, '\n Con', user_race.constitution, '\n Int', user_race.intelligence, '\n Wis', user_race.wisdom, '\n Cha', user_race.charisma, '\nYour heritage:\n',  user_race.heritage_bonus)
 print ('Feats:\n Ancestery:', Character_Feats.ancestry_feats[1])
