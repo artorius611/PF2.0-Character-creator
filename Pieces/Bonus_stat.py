@@ -1,7 +1,7 @@
 from Pieces import Ancestry
 
 class Bonus_Stat :
-    def __init__ (self, strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus) :
+    def __init__ (self, strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus, dwarf, gimli) :
         self.dexterity = dexterity 
         self.wisdom = wisdom 
         self.strength = strength 
@@ -11,7 +11,8 @@ class Bonus_Stat :
         self.health = health
         self.speed = speed
         self.bonus_user_input = 0
-        user_race = Ancestry.Dwarf (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus)
+        self.dwarf = 0
+        user_race = Ancestry.Dwarf (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus, dwarf, gimli)
         if Ancestry.Dwarf.gimli == "true" :
             while bonus_user_input == 0:
                 print ('\nWhat is your bonus stat?\n')
