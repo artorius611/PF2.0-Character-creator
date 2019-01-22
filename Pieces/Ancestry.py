@@ -1,454 +1,186 @@
-import os
-from Pieces import Race
+from Pieces import Ancestry
 
-Character_feats = {'ancestry feats' : { 1 : "false", 5 : "false", 9 : "false", 13 : "false", 17 : "false"} ,
-                    'skill feats' : {'Background' : "false", 2 : "false", 4 : "false", 6 : "false", 8 : "false", 10 : "false", 12 : "false", 14 : "false", 16 : "false", 18 : "false", 20 : "false"}, 
-                    'general feats' : { 3 : "false", 7 : "false", 11 : "false", 15 : "false", 19 : "false"}
-                    }
-class Dwarf :
-    def __init__ (self, strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus, dwarf, gimli) :
-        self.strength = strength + 10
-        self.dexterity = dexterity + 10
-        self.constitution = constitution + 12
-        self.intelligence = intelligence + 10
-        self.wisdom = wisdom + 12
-        self.charisma = charisma + 8
-        self.health = health + 10
-        self.speed = speed + 20
-        self.gimli = "true"
-        self.dwarf = {
-            'heritage' : {'Ancient-Blooded' : 'Dwarven heroes of old could shrug off their enemies’ magic, and some of that resistance manifests in you. You gain the Call on Ancient Blood reaction, but your resistance hampers your connection to magic items. Reduce your total Resonance Points by 2 (minimum 0)',
-            'Desert Dwarf' : 'As a proud denizen of the desert, you have incredible resilience against hot environments. This grants you resistance to fire equal to half your level (minimum 1) and the ability to ignore extreme and severe heat up to 140° F.',
-            'Stronghearted Dwarf' : 'Your blood runs hearty and strong, and you can shake off toxins that would lay others low. You gain poison resistance equal to half your level (minimum 1), and each of your successful saving throws against an ongoing poison reduces its stage by 2, or 1 for a virulent poison. Each critical success against an ongoing poison reduces its stage by 3, or 2 for a virulent poison.',
-            'Unburdened Dwarf ' : 'Your ancestors fought in ancient wars, generations after generations adapting to wearing massive suits of armor. If your Speed would be reduced by armor you wear or the encumbered condition, you ignore 5 feet of that reduction.'},
-            2 : {'Ancestral Hatred' : 'You have shaped your hatred of ancestral dwarven foes into a powerful weapon. Choose two of the following creature traits: derro, duergar, giant, or orc. You gain a +1 circumstance bonus to damage rolls against creatures with one of the chosen traits. If a creature with a chosen trait critically succeeds at an attack against you, this bonus increases to +4 against that creature for 1 minute. Special Your GM can add appropriate creature traits to this list if your character is from a community that commonly fights other types of enemies.', 
-            '''Ancient's Blood''' : 'Trigger You attempt a saving throw against a magical effect. Your ancestors’ innate resistance to magic has manifested in you. You gain a +2 circumstance bonus to the triggering saving throw. Special Your resistance hampers your connection to magic items. Reduce your total Resonance Points by 2 (minimum 0). For more information about Resonance Points, see page 376.',
-            'Boulder Roll' : 'Your dwarven build allows you to push foes around. Take a Step into the square of a foe that is your size or smaller, and the foe must move into the empty space directly behind it. The foe must move even if doing so places it in harm’s way. The foe can attempt to block your Step by rolling a Fortitude saving throw against your Athletics DC. If the foe attempts this saving throw, regardless of the saving throw’s result, the creature takes bludgeoning damage equal to your level plus your Strength modifier. If the foe can’t move into an empty space (if it is surrounded by solid objects or other creatures, for example), your Boulder Roll has no effect. Prerequisites Mountain Roots',
-            'Giant Bane' : 'Your squat stature and your hatred for giantkind give you an edge when fighting them. You gain a +1 circumstance bonus to your Armor Class against giants; Fortitude and Reflex DCs against giants’ attempts to Disarm, Grapple, Shove, or Trip you; Survival checks to track giants; Perception checks to notice giants; and Stealth checks to avoid being noticed by giants.',
-            'Hardy' : 'Your blood runs hearty and strong, and you can shake off toxins that would lay others low. You gain poison resistance equal to half your level (minimum 1), and each of your successful saving throws against an ongoing poison reduces its stage by 2, or 1 for a virulent poison. Each critical success against an ongoing poison reduces its stage by 3, or 2 for a virulent poison.',
-            'Mountain Root' : 'You can plant your feet on the ground to become nearly immovable. You gain a +2 circumstance bonus to your Fortitude or Reflex DC whenever anyone attempts to Shove or Trip you. This bonus also applies to saves against spells or effects that attempt to knock you prone. In addition, if any ability or effect would force you to move 10 feet or more in any direction, you are moved only half the distance.',
-            'Rock Runner' : 'Your innate connection to stone makes you adept at moving across uneven surfaces. When you take the Step action, you can ignore difficult terrain caused by uneven ground made of stone and earth. In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven ground made of stone or earth, you aren’t flat-footed, and you treat a success on the Acrobatics check as if it were a critical success.',
-            'Stonecunning' : 'You have a knack for noticing inconsistencies and craftsmanship techniques in the stonework around you. You gain a +2 circumstance bonus to Perception checks to notice unusual stonework. This bonus applies to checks to discover mechanical traps made of stone or hidden inside of stone. If you aren’t using the Seek action or searching, the GM rolls a secret check without the bonus and with a –2 circumstance penalty for you to notice unusual stonework anyway (in such cases, this feat takes on the secret trait).',
-            'Weapon Cunning (Dwarf)' : 'Whenever you critically hit using a weapon of the axe, hammer, or pick group, you apply the weapon’s critical specialization effect. Prerequisites Weapon Familiarity (Dwarf).',
-            'Weapon Familiarity(Dwarf)' : 'Your kin have instilled in you an affinity for hardhitting weapons, and you prefer them to more elegant arms. You are trained with the battleaxe, pick, and warhammer. In addition, you gain access to all uncommon dwarf weapons. For the purpose of proficiencies, you treat martial dwarf weapons as simple weapons and exotic dwarf weapons as martial weapons.'}
-        }
-        print (self.dwarf[ 'heritage' ])
-        heritage_input = "false"
-        while heritage_input == "false":
-            print ('\nWhat is your Heritage?\n')
-            print ('1) Ancient-Blooded ')
-            print ('2) Desert Dwarf')
-            print ('3) Stronghearted Dwarf')
-            print ('4) Unburdened Dwarf')
-            choice = input('')
-            print (choice)
-            if choice == '1' :
-                heritage_input = "true"
-                self.dwarf = self.dwarf['heritage']["Ancient-Blooded"]
-            elif choice == '2' :
-                heritage_input = "true"
-                self.dwarf = self.dwarf['heritage']['Desert Dwarf']
-            elif choice == '3' :
-                heritage_input = "true"
-                self.heritage_bonus = self.dwarf['heritage']['Stronghearted Dwarf']
-            elif choice == '4' :
-                heritage_input = "true"
-                self.dwarf = self.dwarf['heritage']['Unburdened Dwarf']
-        else:
-            print ('\n \nYou selected something invalid\n \n')
-        #clear the screen
-        os.system ('cls') 
-        print (self.dwarf[ 2 ])
-        feat_choice = "false"
-        while feat_choice == "false" :
-            print ('What feat do you choose?')
-            print ('1) Ancestral Hatred')
-            print ('''2) Ancient's Blood''')
-            print ('3) Giant Bane')
-            print ('4) Hardy')
-            print ('5) Mountain Root')
-            print ('6) Rock Runner')
-            print ('7) Stonecunning')
-            print ('8) Weapon Familiarity(Dwarf)')
-            feat_choice = input('')
-            if feat_choice == 1 :
-                Character_Feats['ancestry_feats'][1] = self.dwarf[2]['Ancestral Hatred'] 
-                feat_choice = "true"
-            elif feat_choice == 2 :
-                Character_Feats['ancestry_feats'][1] = self.dwarf[2]['''Ancient's Blood'''] 
-                feat_choice = "true"
-            elif feat_choice == 3 :
-                Character_Feats['ancestry_feats'][1] = self.dwarf[2]['Giant Bane'] 
-                feat_choice = "true"
-            elif feat_choice == 4 :
-                Character_Feats['ancestry_feats'][1] = self.dwarf[2]['Hardy'] 
-                feat_choice = "true"
-            elif feat_choice == 5 :
-                Character_Feats['ancestry_feats'][1] = self.dwarf[2]['Mountain Root'] 
-                feat_choice = "true" 
-            elif feat_choice == 6 :
-                Character_Feats['ancestry_feats'][1] = self.dwarf[2]['Rock Runner'] 
-                feat_choice = "true"
-            elif feat_choice == 7 :
-                Character_Feats['ancestry_feats'][1] = self.dwarf[2]['Stonecunning'] 
-                feat_choice = "true"
-            elif feat_choice == 8 :
-                Character_Feats['ancestry_feats'][1] = self.dwarf[2]['Weapon Familiarity(Dwarf)'] 
-                feat_choice = "true" 
-        else:
-            print ('\n \nYou selected something invalid\n \n')
-            #clear the screen
-        os.system ('cls')                                                                             
-class Elf :
-    def __init__ (self, strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus) :
-        self.strength = strength 
-        self.dexterity = dexterity +2
-        self.constitution = constitution - 2
-        self.intelligence = intelligence + 2
-        self.wisdom = wisdom 
-        self.charisma = charisma 
-        self.health = health + 6
-        self.speed = speed + 30
-        legolas = "true"
-        self.elf_heritage = {
-            'Arctic Elf' : 'You dwell deep in the frozen lands of the arctic north and have gained incredible resilience against cold environments. This adaptation grants you resistance to cold equal to half your level (minimum 1) and the ability to ignore extreme and severe cold down to –80° F.',
-            'Cavern Elf' : 'You come from underground tunnels or from caverns where light is scarce. You gain darkvision.',
-            'Keen-eared Elf' : 'Your ears are finely tuned, able to detect even the slightest whispers of sound. As long as you can hear normally, you can use the Seek action to sense unseen creatures in a 60-foot cone instead of a 30-foot cone. When using the Seek action to sense unseen creatures that you could hear within 30 feet, you gain a +2 circumstance bonus. ',
-            'Jungle Elf' : 'You’re adapted to life in the deep jungle, and you know how to climb through a jungle more easily and use the foliage to your advantage. When climbing trees, vines, and other foliage, you move at half your Speed on a success and at full Speed on a critical success (and you move at full Speed on a success if you have Quick Climb). This doesn’t affect you if you’re using a climb Speed. You can always use the Take Cover action when within a forest or jungle area to gain cover, even if you’re not next to an obstacle you can take cover behind.'
-        }
-        print (self.elf_heritage)
-        heritage_input = "false"
-        while heritage_input == "false":
-            print ('\nWhat is your Heritage?\n')
-            print ('1) Arctic Elf ')
-            print ('2) Cavern Elf')
-            print ('3) Keen-eared Elf')
-            print ('4) Jungle Elf')
-            choice = input('')
-            print (choice)
-            if choice == '1' :
-                heritage_input = "true"
-                self.heritage_bonus = self.elf_heritage["Arctic Elf"]
-            elif choice == '2' :
-                heritage_input = "true"
-                self.heritage_bonus = self.elf_heritage['Cavern Elf']
-            elif choice == '3' :
-                heritage_input = "true"
-                self.heritage_bonus = self.elf_heritage['Keen-eared Elf']
-            elif choice == '4' :
-                heritage_input = "true"
-                self.heritage_bonus = self.elf_heritage['Jungle Elf']
-        else:
-            print ('\n \nYou selected something invalid\n \n')
-        #clear the screen
-        os.system ('cls')
-
-class Gnome :
-    def __init__ (self, strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus) :
-        self.strength = strength - 2
+class Bonus_Stat :
+    def __init__ (self, strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus, dwarf) :
         self.dexterity = dexterity 
-        self.constitution = constitution + 2
-        self.intelligence = intelligence
         self.wisdom = wisdom 
-        self.charisma = charisma + 2
-        self.health = health + 8
-        self.speed = speed + 20
-        weebee = "true"
-        self.gnome_heritage = {
-            'Bleachling' : 'Something in your background caused you to react strangely to the Bleaching compared to other gnomes. Instead of dying, you lost your color but remained stable. You are immune to the Bleaching and gain the Animal Speaker feat. It’s possible for your heritage to change from your starting heritage to bleachling during the course of play due to the effects of the Bleaching, though typically only in campaigns that span an incredibly long amount of time.',
-            'Deep Gnome' : 'Also called a svirfneblin, you come from underground and have found a way to stave off the gnome malaise known as the Bleaching. You gain darkvision and are immune to the Bleaching.',
-            'Fell Gnome' : 'Unlike most gnomes, you have a connection to some of the darker fey, such as gremlins and redcaps. You can cast chill touch as an innate primal spell at will. The cantrip is heightened to a spell level equal to half your level rounded up.',
-            'Sharp-nosed Gnome' : 'You see all colors as brighter, hear all sounds as richer, and especially smell all scents with incredible detail. You gain a +2 circumstance bonus to sense an unseen creature that is close enough for you to smell (typically within 30 feet, though halve the distance if you are upwind and double the distance if you are downwind).'
-        }
-        print (self.gnome_heritage)
-        heritage_input = "false"
-        while heritage_input == "false":
-            print ('\nWhat is your Heritage?\n')
-            print ('1) Bleachling ')
-            print ('2) Deep Gnome')
-            print ('3) Fell Gnome')
-            print ('4) Sharp-nosed Gnome')
-            choice = input('')
-            print (choice)
-            if choice == '1' :
-                heritage_input = "true"
-                self.heritage_bonus = self.gnome_heritage["Bleachling"]
-            elif choice == '2' :
-                heritage_input = "true"
-                self.heritage_bonus = self.gnome_heritage['Deep Gnome']
-            elif choice == '3' :
-                heritage_input = "true"
-                self.heritage_bonus = self.gnome_heritage['Fell Gnome']
-            elif choice == '4' :
-                heritage_input = "true"
-                self.heritage_bonus = self.gnome_heritage['Sharp-nosed Gnome']
-        else:
-            print ('\n \nYou selected something invalid\n \n')
-        #clear the screen
-        os.system ('cls')
-
-class Goblin :
-    def __init__ (self, strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus) :
         self.strength = strength 
-        self.dexterity = dexterity + 2
         self.constitution = constitution 
         self.intelligence = intelligence 
-        self.wisdom = wisdom - 2
-        self.charisma = charisma + 2 
-        self.health = health + 6
-        self.speed = speed + 25
-        norman = "true"
-        self.goblin_heritage = {
-            'Bigbelly Goblin' : 'You can subsist on food that most folks would consider spoiled. You are always considered fed with poor meals in a settlement as long as garbage is readily available, without using the Subsist on the Streets downtime activity. You gain a +2 circumstance bonus to saving throws against toxins, against gaining the sick condition, and on removing the sick condition, but only if the toxin or condition resulted from something you ate or drank. Treat a success on Fortitude saves to reduce the effect of an ingested toxin or the sick condition as a critical success. You can eat and drink things when you have the sick condition.',
-            'Inflammable Goblin' : 'Your ancestors have always had a connection to fire and a thicker skin, allowing you to resist burning. You gain resistance to fire equal to half your level (minimum 1). Your flat check to remove persistent fire damage (see page 323) is DC 15 instead of DC 20 without requiring an action to reduce the DC.',
-            'Razortooth Goblin' : 'Your family can use their teeth as formidable weapons. You gain a jaws unarmed attack that deals 1d6 piercing damage.',
-            'Snow Goblin' : 'As a snow goblin, you live in deeply cold lands and have skin ranging from sky blue to navy in color. You gain resistance to cold equal to half your level (minimum 1) and the ability to ignore extreme and severe cold down to –80° F.'
-        }
-        print (self.goblin_heritage)
-        heritage_input = "false"
-        while heritage_input == "false":
-            print ('\nWhat is your Heritage?\n')
-            print ('1) Bigbelly Goblin ')
-            print ('2) Inflammable Goblin')
-            print ('3) Razortooth Goblin')
-            print ('4) Snow Goblin')
-            choice = input('')
-            print (choice)
-            if choice == '1' :
-                heritage_input = "true"
-                self.heritage_bonus = self.goblin_heritage["Bigbelly Goblin"]
-            elif choice == '2' :
-                heritage_input = "true"
-                self.heritage_bonus = self.goblin_heritage['Inflammable Goblin']
-            elif choice == '3' :
-                heritage_input = "true"
-                self.heritage_bonus = self.goblin_heritage['Razortooth Goblin']
-            elif choice == '4' :
-                heritage_input = "true"
-                self.heritage_bonus = self.goblin_heritage['Snow Goblin']
-        else:
-            print ('\n \nYou selected something invalid\n \n')
-        #clear the screen
-        os.system ('cls')
-
-class Halfling :
-    def __init__ (self, strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus) :
-        self.strength = strength - 2
-        self.dexterity = dexterity + 2
-        self.constitution = constitution
-        self.intelligence = intelligence
-        self.wisdom = wisdom + 2
-        self.charisma = charisma 
-        self.health = health + 6
-        self.speed = speed + 25
-        frodo = "true"
-        self.halfling_heritage = {
-            'Gutsy Halfling' : 'Your family line is known for keeping a level head and staving off fear when the chips go down, making them wise leaders. If you succeed at a saving throw against an emotion effect, treat your result as a critical success instead of a success.',
-            'Jungle Halfling' : 'You live deep in the jungle, and you’ve learned how to use your small size to wriggle through undergrowth, vines, and other obstacles. You can ignore difficult terrain from trees and foliage, whether in a jungle or elsewhere.',
-            'Nomadic Halfling' : 'Your ancestors have traveled from place to place for generations. You gain a new language of your choice, and every time you take the Multilingual feat, you gain another new language.',
-            'Twilight Halfling' : 'Your ancestors performed many acts under cover of dusk and developed eyesight beyond even the usual keen eyes of halflings. You gain low-light vision.'
-        }
-        print (self.halfling_heritage)
-        heritage_input = "false"
-        while heritage_input == "false":
-            print ('\nWhat is your Heritage?\n')
-            print ('1) Gutsy Halfling')
-            print ('2) Jungle Halfling')
-            print ('3) Nomadic Halfling')
-            print ('4) Twilight Halfling')
-            choice = input('')
-            print (choice)
-            if choice == '1' :
-                heritage_input = "true"
-                self.heritage_bonus = self.halfling_heritage['Gutsy Halfling']
-            elif choice == '2' :
-                heritage_input = "true"
-                self.heritage_bonus = self.halfling_heritage['Jungle Halfling']
-            elif choice == '3' :
-                heritage_input = "true"
-                self.heritage_bonus = self.halfling_heritage['Nomadic Halfling']
-            elif choice == '4' :
-                heritage_input = "true"
-                self.heritage_bonus = self.halfling_heritage['Twilight Halfling']
-        else:
-            print ('\n \nYou selected something invalid\n \n')
-        #clear the screen
-        os.system ('cls')
-
-class Human :
-    def __init__ (self, strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus) :
-        self.strength = strength 
-        self.dexterity = dexterity
-        self.constitution = constitution
-        self.intelligence = intelligence
-        self.wisdom = wisdom 
-        self.charisma = charisma 
-        self.health = health + 8
-        self.speed = speed + 25
-        boromir = "true"
-        self.human_heritage = {
-            'Half-elf' : 'Either one of your parents was an elf, or one or both were half-elves. You have pointed ears and other telltale signs of elf heritage. You gain the elf trait and low-light vision. In addition, you can select elf, half-elf, and human feats whenever you gain an ancestry feat.',
-            'Half-orc' : 'Either one of your parents was an orc, or one or both were half-orcs. You have a green tinge to your skin and other indicators of orc heritage. You gain the orc trait and low-light vision. In addition, you can select orc, half-orc, and human feats whenever you gain an ancestry feat.',
-            'Skilled Heritage' : 'Your ingenuity allows you to train in a wide variety of skills. You become trained in one skill of your choice. At 5th level, you become an expert in the chosen skill.',
-            'Versatile Heritage' : 'Versatility and ambition have fueled humanity’s ascendance to its position as the most common ancestry in most nations throughout the world. Select a general feat of your choice for which you meet the prerequisites.'
-        }
-        print (self.human_heritage)
-        heritage_input = "false"
-        while heritage_input == "false":
-            print ('\nWhat is your Heritage?\n')
-            print ('1) Half-elf ')
-            print ('2) Half-orc')
-            print ('3) Skilled Heritage')
-            print ('4) Versatile Heritage')
-            choice = input('')
-            print (choice)
-            if choice == '1' :
-                heritage_input = "true"
-                boromir = "false"
-                aragorn = "true"
-                self.heritage_bonus = self.human_heritage["Half-elf"]
-            elif choice == '2' :
-                heritage_input = "true"
-                boromir = "false"
-                daelan = "true"
-                self.heritage_bonus = self.human_heritage['Half-orc']
-            elif choice == '3' :
-                heritage_input = "true"
-                self.heritage_bonus = self.human_heritage['Skilled Heritage']
-            elif choice == '4' :
-                heritage_input = "true"
-                self.heritage_bonus = self.human_heritage['Versatile Heritage']
-        else:
-            print ('\n \nYou selected something invalid\n \n')
-        #clear the screen
-        os.system ('cls')
-
-valid_user_input = "false"
-while valid_user_input == "false" :
-    a = Race()
-    a.Selection(choice)
-    print (a)
-    if a == '1' :
-        valid_user_input = "true"
-        user_race = Ancestry.Dwarf (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus, dwarf, gimli)
-    elif a == '2' :
-        valid_user_input = "true"
-        user_race = Ancestry.Elf (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus)
-        bonus_user_input = "true"
-        while bonus_user_input == "true":
-            print ('\nWhat is your bonus stat?\n')
-            print ('1) Str')
-            print ('2) Con')
-            print ('3) Wis')
-            print ('4) Cha')
-            choice = int(input(''))
-            bonus = 2
-            if choice == 1 :
-                bonus_user_input = "false"
-                user_race.strength = user_race.strength + bonus
-            elif choice == 2 :
-                bonus_user_input = "false"
-                user_race.constitution = user_race.constitution + bonus
-            elif choice == 3 :
-                bonus_user_input = "false"
-                user_race.wisdom = user_race.wisdom + bonus
-            elif choice == 4 :
-                bonus_user_input = "false"
-                user_race.charisma = user_race.charisma + bonus
-            else:
-                print ('\nYou selected something invalid\n')
-            # the string below clears the screen
-            os.system ('cls')
-    elif a == '3' :
-        valid_user_input = "true"
-        user_race = Ancestry.Gnome (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus)
-        bonus_user_input = "true"
-        while bonus_user_input == "true":
+        self.charisma = charisma
+        self.health = health
+        self.speed = speed
+        while self.bonus_user_input <= 1 :
             print ('\nWhat is your bonus stat?\n')
             print ('1) Str')
             print ('2) Dex')
-            print ('3) Wis')
+            print ('3) Con')
             print ('4) Int')
-            choice = int(input(''))
-            bonus = 2
-            if choice == 1 :
-                bonus_user_input = "false"
-                user_race.strength = user_race.strength + bonus
-            elif choice == 2 :
-                bonus_user_input = "false"
-                user_race.dexterity = user_race.dexterity + bonus
-            elif choice == 3 :
-                bonus_user_input = "false"
-                user_race.wisdom = user_race.wisdom + bonus
-            elif choice == 4 :
-                bonus_user_input = "false"
-                user_race.intelligence = user_race.intelligence + bonus
-            else:
-                print ('\nYou selected something invalid\n')
-            # the string below clears the screen
-            os.system ('cls')
-    elif a == '4' :
-        valid_user_input = "true"
-        user_race = Ancestry.Goblin (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus)
-        bonus_user_input = "true"
-        while bonus_user_input == "true":
-            print ('\nWhat is your bonus stat?\n')
-            print ('1) Str')
-            print ('2) Con')
-            print ('3) Wis')
-            print ('4) Int')
-            choice = int(input(''))
-            bonus = 2
-            if choice == 1 :
-                bonus_user_input = "false"
-                user_race.strength = user_race.strength + bonus
-            elif choice == 2 :
-                bonus_user_input = "false"
-                user_race.constitution = user_race.constitution + bonus
-            elif choice == 3 :
-                bonus_user_input = "false"
-                user_race.wisdom = user_race.wisdom + bonus
-            elif choice == 4 :
-                bonus_user_input = "false"
-                user_race.intelligence = user_race.intelligence + bonus
-            else:
-                print ('\nYou selected something invalid\n')
-            # the string below clears the screen
-            os.system ('cls')
-    elif a == '5' :
-        valid_user_input = "true"
-        user_race = Ancestry.Halfling (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus)
-        bonus_user_input = "true"
-        while bonus_user_input == "true":
-            print ('\nWhat is your bonus stat?\n')
-            print ('1) Str')
-            print ('2) Con')
-            print ('3) Int')
-            print ('4) Cha')
+            print ('5) Wis')
+            print ('6) Cha')
             choice = int(input(''))
             print (choice)
             bonus = 2
             if choice == 1 :
-                bonus_user_input = "false"
-                user_race.strength = user_race.strength + bonus
-            elif choice == 2 :
-                bonus_user_input = "false"
-                user_race.constitution = user_race.constitution + bonus
+                if self.bonus_user_input == 1 :
+                    print ('you cant select the same bonus')
+                else :
+                    self.bonus_user_input = self.bonus_user_input + 1
+                    bonus_race.strength = bonus_race.strength + bonus
+            elif choice == 2 :  
+                if self.bonus_user_input == 1 :
+                    print ('you cant select the same bonus')
+                else :
+                    self.bonus_user_input = self.bonus_user_input + 1
+                    bonus_race.dexterity = bonus_race.dexterity + bonus
             elif choice == 3 :
-                bonus_user_input = "false"
-                user_race.intelligence = user_race.intelligence + bonus
+                if self.bonus_user_input == 1 :
+                    print ('you cant select the same bonus')
+                else :
+                    self.bonus_user_input = self.bonus_user_input + 1
+                    bonus_race.constitution = bonus_race.constitution + bonus
             elif choice == 4 :
-                bonus_user_input = "false"
-                user_race.charisma = user_race.charisma + bonus
+                if self.bonus_user_input == 1 :
+                    print ('you cant select the same bonus')
+                else :
+                    self.bonus_user_input = self.bonus_user_input + 1
+                    bonus_race.intelligence = bonus_race.intelligence + bonus
+            elif choice == 5 :
+                if self.bonus_user_input == 1 :
+                    print ('you cant select the same bonus')
+                else :
+                    self.bonus_user_input = self.bonus_user_input + 1
+                    bonus_race.wisdom = bonus_race.wisdom + bonus
+            elif choice == 6 :
+                if self.bonus_user_input == 1 :
+                    print ('you cant select the same bonus')
+                else :
+                    self.bonus_user_input = self.bonus_user_input + 1
+                    bonus_race.charisma = bonus_race.charisma + bonus
             else:
                 print ('\nYou selected something invalid\n')
             # the string below clears the screen
             os.system ('cls')
-    elif a == '6' :
-        valid_user_input = "true"
-        user_race = Ancestry.Human (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, heritage_bonus)
-        bonus_user_input = Bonus_stat.Bonus_Stat(strength, dexterity, constitution, intelligence, wisdom, charisma)
-    else:
-        print ('\n \nYou selected something invalid\n \n')
-    # the string below clears the screen
-    os.system ('cls')
+# need to divide this up further
+# break it up like the table for feats i.e ARcana skill, atheltic skill, crafting skill, etc
+general_feats = { 'general feats' : { 1 : {'Adopted Ancestry' : 'Whether adopted at birth, earned through rite of passage, or bonded through a deep friendship or romance, you have become fully immersed in another ancestry’s culture and traditions. Choose a common ancestry. You can take ancestry feats from the ancestry you chose, in addition to your character’s own ancestry, as long as the ancestry feats don’t require any feature of that ancestry’s physiology, as determined by the GM.',
+                                           'Alertness' : 'You remain alert to threats around you. You gain expert proficiency in Perception.',
+                                           'Ancestral Paragon' : 'Whether instinctively, through study, or through a mystic sense, you feel a deeper connection to your ancestry than most of those who share that ancestry. You gain a level-1 ancestry feat.',
+                                           'Armor Proficency' : 'You become trained in light armor. If you already were trained in light armor, you gain training in medium armor, and if you were trained in both, you become trained in heavy armor. Special You can select this feat more than once. Each time you select this feat, you become trained in the next type of armor as appropriate (first light armor, then medium armor, then heavy armor).',
+                                           'Breath Control' : 'You have incredible control of your breathing, granting you advantages when air is short and allowing you to instinctually hold your breath when necessary. Even if you don’t Breathe Deep, you can take actions equal to three times your Constitution score before suffocating. If you do Breathe Deep, you can take actions equal to ten times your Constitution score. You gain a +1 circumstance bonus on saving throws against inhaled poisons and other threats you breathe in, and you treat successes on such saving throws as critical successes.',
+                                           'Diehard' : 'It takes more to kill you than most. You die from the dying condition at dying 5, rather than dying 4.',
+                                           'Fast Recovery' : 'Your body bounces back from extreme situations much more quickly than most. You recover twice as many Hit Points from resting. Each time you succeed at a Fortitude save against an ongoing toxin, you reduce its stage by 2, or by 1 against a virulent toxin. Each critical success you achieve against an ongoing toxin reduces its stage by 3, or by 2 against a virulent toxin. In addition, you reduce the severity of your drained condition by 2 when you rest for a night instead of by 1. You reduce your enervated condition by 2 when you succeed at your Fortitude save or spend a day of downtime training, and by 3 when you critically succeed at your Fortitude save.',
+                                           'Feather Step' : 'You step carefully and quickly, even in adverse environments. You can Step into difficult terrain.',
+                                           'Fleet' : 'You move quickly both on and off the battlefield. Your Speed increases by 5 feet.',
+                                           'Great Fortitude' : 'Your physique is incredibly hardy. You gain expert proficiency in Fortitude saves.',
+                                           'Hefty Hauler' : 'You can carry more than your frame implies. Increase your maximum and encumbered Bulk limits by 2.',
+                                           'Incredible Initiative' : 'You react more quickly than others can in any situation. You gain a +1 circumstance bonus to all initiative rolls, whether they’re Perception checks, skill checks, or any other kind of rolls.',
+                                           'Iron Will' : 'Your mental defenses are an iron fortress. You gain expert proficiency in Will saves.',
+                                           'Lightning Reflixes' : 'Your reflexes are lightning fast. You gain expert proficiency in Reflex saves.',
+                                           'Remarkable Resonance' : 'Increase your maximum Resonance Points by 2.',
+                                           'Ride' : 'You can use the Command an Animal action to control a mount without having to first use Handle an Animal.',
+                                           'Shield Proficiency' : 'You become trained in shields.',
+                                           'Toughness' : 'You can withstand more punishment than most before going down. Increase your maximum Hit Points by your level or 4, whichever is higher. When you reach level 5 and every time you gain a level thereafter, adjust your maximum Hit Points gained from Toughness accordingly (for example, at level 7, this feat would increase your maximum Hit Points by 7). You also gain a +1 circumstance bonus to recovery saves.',
+                                           'Weapon Proficiency' : 'You gain the trained proficiency rank in all simple weapons. If you were already trained in all simple weapons, you become trained in all martial weapons. If you were already trained in all martial weapons, you become trained in one exotic weapon of your choice. Special You can select this feat more than once, each time you select it, you become trained in additional weapons as appropriate (first all simple weapons, then all martial weapons, then one exotic weapon each additional time).'
+                                            },
+                                      7 : {'Expeditious Search' :  'You have a system that lets you search at great speed, finding details and secrets twice as quickly as others can. When searching, you take half as long as usual to search a given area. This also allows you to move twice as quickly while exploring and ensure you’ve searched an area before walking into it. If you’re legendary in Perception, you instead search areas four times as quickly.'} },
+                  'skill feats' : { 1 : {'Assurance' : 'Even in the worst circumstances, you can perform basic tasks with your skill. Choose a skill you’re trained in when you first select this feat. You can forgo rolling a skill check for your chosen skill to instead receive a result of 10 (do not apply any of your bonuses, penalties, or modifiers). If you’re an expert in your chosen skill, you receive a result of 15; if you’re a master, you receive a result of 20; and if you’re legendary, you receive a result of 30. Special You can select this feat multiple times. Each time you do, you choose a different skill, and gain the benefits for the chosen skill.',
+                                         'Dubious Knowledge' : 'You’re a treasure trove of information, but not all of it is from reputable sources. When you fail a Recall Knowledge check using any skill that has that action, you learn one bit of true knowledge and one bit of erroneous knowledge, but you don’t have any way to differentiate which is which.',
+                                         'Quick Identification' : 'You take only 10 minutes when using Identify Magic to determine the properties of an item, ongoing effect, or location, rather than 1 hour. If you’re an expert, it takes 5 minutes; if you’re a master, it takes 1 minute; and if you’re legendary, it takes 3 rounds.',
+                                         'Recognize Spell' : 'The GM rolls a secret Arcana, Nature, Occultism, or Religion check, whichever corresponds to the tradition of the spell being cast. If you’re not trained in the skill, you can’t get a result better than failure. The DC of the check is 10 plus triple the level of the spell. The DC for an uncommon spell is usually 2 higher, and 5 higher for a rare spell. Success You correctly recognize the spell. Critical Success You correctly recognize the spell and get a +1 circumstance bonus to your saving throw or your AC to defend against it (if applicable). Failure You fail to recognize the spell. Critical Failure You misidentify the spell as another spell entirely, of the GM’s choice.',
+                                         'Scribe Scroll' : 'You can write spells onto scrolls, allowing you to cast them later without spending a spell slot. You use the Craft activity as described on page 148, but you can make only scrolls. Instead of attempting a Crafting check, you attempt a check with the appropriate skill for the spell’s tradition—Arcana for a spell on the arcane spell list, Nature for a primal spell, Occultism for an occult spell, and Religion for a divine spell. If a spell appears on multiple spell lists, you can choose which of the applicable skills to use. You must have access to a spell in order to scribe it onto a scroll.',
+                                         'Skill Training' : 'You become trained in the skill of your choice. Special You can select this feat multiple times, choosing a new skill to become trained in each time.',
+                                         'Trick Magic Item' : 'You examine a magic item you would normally not be able to use—for example, a fighter normally couldn’t use a scroll, staff, or wand—in an effort to fool the item and activate it temporarily. Attempt a check with a skill DC of the item’s level (typically the low-difficulty DC, but the GM could adjust this at their discretion), using the skill that matches the item’s magic tradition (Arcana for a spell on the arcane spell list, Nature for a primal spell, Occultism for an occult spell, and Religion for a divine spell). You must have identified the magic item (or had it identified for you) in order to activate it this way. If you activate a magic item that requires your spell roll or spell DC and you don’t have the ability to cast spells of the relevant type (such as arcane or divine), you have the untrained proficiency rank and can use the highest of your Intelligence, Wisdom, and Charisma modifiers. If you’re a master in the appropriate skill for that magical tradition, you’re treated as having the trained proficiency rank instead. If the spell’s tradition depends on the caster’s class or requires her to have the spell on her spell list, you choose which class you’re attempting to emulate. Success You can spend actions to activate the item as if you could normally use it as long as you do so before the end of your turn. Failure You can’t use the item for the remainder of your turn, but you can try again on subsequent turns. Critical Failure You can’t use the item, and can’t try to use it again until you next prepare.',
+                                         'Cat Fall' : 'Your catlike aerial acrobatics allow you to cushion your fall. Treat all falls as if you fell 10 fewer feet. If you’re an expert in Acrobatics, treat falls as 25 feet shorter. If you’re a master in Acrobatics, treat them as 50 feet shorter. If you’re legendary in Acrobatics, you always land on your feet and don’t take damage, regardless of the distance of the fall.',
+                                         'Steady Balance' : 'You can keep your balance easily, even when balancing in adverse conditions. You treat a success using the Balance action as a critical success. You’re not flat-footed while attempting to Balance on narrow surfaces and uneven ground, and if you’re the target of an attack or effect that requires a saving throw, you fall only if you critically fail your attempt to Maintain Balance.',
+                                         'Arcane Sense' : 'Your study of magic allows you to sense its presence around you instinctively. You can cast level 1 detect magic as an innate spell at will. If you are a master of Arcana, it becomes level 3, and if you are legendary in Arcana, it becomes level 4.',
+                                         'Defensive Climber' : 'You are trained in climbing techniques that allow you to twist and weave as you climb without sacrificing your grip. You’re not flat-footed while climbing.',
+                                         'Quick Jump' : 'You can use High Jump and Long Jump as a single action instead of 2 actions. If you do, you don’t perform the initial Stride, and you don’t need to have moved 10 feet.',
+                                         'Underwater Marauder' : 'You’ve learned to fight underwater like an aquatic native. You are not flat-footed while you are in water, and you don’t take the usual penalties for using a bludgeoning or slashing melee weapon in water.',
+                                         'Alchemical Crafting' : 'You can use the Craft activity to create alchemical items in addition to mundane ones. When you select this feat, you immediately gain the formulas for four common level 1 alchemical items. If you have a formula book, you can put these into the book.' ,                
+                                         'Quick Repair' : 'You take only 10 minutes to Repair an item, rather than 1 hour. If you’re an expert, it takes 5 minutes; if you’re a master, it takes 1 minute; and if you’re legendary, it takes 3 rounds.',
+                                         'Snare Crafting' : 'You can use the Craft activity to create snares, using the rules from page 357 of the PHB. When you choose this feat, you gain the formulas for four common snares. If you have a formula book, you can put these formulas into the book.',
+                                         'Specialty Crafting' : 'Your training focused on Crafting one particular kind of item. Select one of the specialties listed below; you gain a +2 circumstance bonus on Crafting checks to Craft items of that type. If it’s unclear whether the specialty applies, the GM decides. Some specialties might only partially apply. For example, if you were making a morningstar and had specialty in woodworking, the GM might give you half your bonus because the item requires both blacksmithing and woodworking.Alchemy* Alchemical items such as elixirs | Artistry - Fine art, including jewelry | Blacksmithing - Durable metal goods, including metal armor | Bookmaking - Books and paper | Glassmaking - Glass, including glassware and windows | Leatherworking - Leather goods, including leather armor | Pottery - Ceramic goods | Shipbuilding - Ships and boats | Stonemasonry - Stone goods and structures | Tailoring - Clothing | Weaving - Textiles, baskets, and rugs| Woodworking - Wooden goods and structures',
+                                         'Charming Liar' : 'When you get a critical success with the Lie action, the target’s attitude toward you improves by one step, as though you’d succeeded at using Diplomacy to Make an Impression. This works only once per conversation, and if you get critical successes against multiple targets using the same result, you choose which creature’s attitude to improve. You must be lying in a way that appears to impart important information— in other words, your lie must make the target grateful for your supposed help, which trivial or irrelevant lies can’t achieve.',
+                                         'Close Match' : 'You’re androgynous, look a bit older or younger than you are, or look like you might have an ancestry other than your own. Choose a different gender, an age other than your own, or an ancestry the same size as yours. You can disguise yourself as that sort of person without taking a penalty to your Deception check. At the GM’s discretion, if you are extremelysmall or big for your size, you can choose an ancestry of a size different from your own.',
+                                         'Group Impression' : 'When you Make an Impression, you can compare your Diplomacy check result to the Will DCs of two targets instead of one. It’s possible to get a different degree of success for each target. The number of targets increases to four if you’re an expert, 10 if you’re a master, and 25 if you’re legendary.',
+                                         'Hobnobber' : 'You can attempt to Gather Information twice as many times as usual during a day of downtime (typically six to eight attempts instead of three to four).', 
+                                         'Intimidating Glare' : 'You can Demoralize those around you with a mere glare. When you do, Demoralize loses the auditory trait and gains the visual trait, and you don’t take a penalty when you attempt to Demoralize a creature that doesn’t understand your language or can’t hear you.',
+                                         'Quick Intimidation' : 'You can Coerce others with little more than a few choice implications, allowing you to Coerce a creature after 1 round of conversation instead of 1 minute.',
+                                         'Additional Lore' : 'The breadth of your knowledge has increased to encompass a new field. Choose an additional Lore skill subcategory. You become trained in it and it counts as a signature skill. At 3rd, 5th, and 13th levels, you gain an additional skill increase you can apply only to Lore. When you select this feat, you gain the skill increases immediately for all listed levels at or below your current level. Special You can select this feat more than once, choosing a new subcategory of Lore each time and gaining the listed skill increases to that Lore.',
+                                         'Experienced Professional' : 'You carefully safeguard your professional endeavors to prevent disaster. When you Practice a Trade, you treat a critical failure as a failure. You must choose one of your Lore subcategories when you select this feat. The feat applies to only the chosen subcategory. Special You can select this feat multiple times. Each time you do, choose a different Lore subcategory and gain the feat’s benefits for the chosen subcategory.',
+                                         'Battle Medic' : 'You can patch up yourself or an adjacent ally, even if you’re in the middle of combat. In order to do so, you must attempt a DC 20 Medicine check. Regardless of your result, the target is bolstered to your use of Battle Medic. If you’re a master of Medicine, you can instead attempt a DC 25 check to increase the Hit Points regained by 2d10, and if you’re legendary, you can instead attempt a DC 30 check to increase the Hit Points regained by 4d10. Success The target regains Hit Points equal to 1d10 plus your Wisdom modifier. Critical Success As success, but target regains 1d10 additional HP. Critical Failure The target takes 1d10 damage.',
+                                         'Train Animal' : 'You spend time to teach an animal to act in a particular way, selected from those listed in the Command an Animal action (see page 153). The GM determines the DC of any check required to do so and the amount of time the training takes (usually at least a week). If you’re expert, master, or legendary in Nature, you might be able to train more exotic creatures, at the GM’s discretion. Success The animal learns the trick. Failure The animal doesn’t learn the trick.',
+                                         'Oddity Identification' : 'Twisting the mind and divining possibilities or concurrent events are hallmarks of occult spells, and your study has taught you to identify these types of spells. You gain a +2 circumstance bonus on Occultism checks to Identify Magic with the mental, possession, prediction, or scrying trait.',
+                                         'Fascinating Performance' : 'When you use the Perform action, compare your check result to the Will DC of one observer. If you succeed, the target is fascinated with you for 1 round; if the observer is in a situation that demands immediate attention, such as combat, you must critically succeed to fascinate the target. You must choose which creature you’re attempting to fascinate before you roll your check, and regardless of your result, the target is bolstered against your Fascinating Performance. If you’re an expert in Performance, you can compare your check result to the Will DCs of up to four observers and fascinate any number of them. If you’re a master in Performance you can fascinate up to 10 observers with a single check, and if you’re legendary in Performance you can try to fascinate any number of observers at the same time.',
+                                         'Virtuosic Performer' : 'You have exceptional talent with one type of performance. You gain a +2 circumstance bonus when making a certain type of performance. Select one of the following specialties and apply the bonus when attempting Performance checks of that type. If it’s unclear whether the specialty applies, the GM decides. | Acting - Drama, pantomime, puppetry | Comedy - Buffoonery, joke-telling, limericks | Dance - Ballet, huara, jig, macru | Keyboards - Harpsichord, organ, piano | Oratory - Epic, ode, poetry, storytelling | Percussion - Chimes, drum, gong, xylophone | Singing - Ballad, chant, melody, rhyming | Strings - Fiddle, harp, lute, viol| Winds - Bagpipe, flute, recorder, trumpet',
+                                         'Student of the Canon' : 'You’ve researched the fundamental tenets of many faiths enough to recognize notions about them that are unlikely to be true. When attempting a Religion check to Read Scripture or to Recall Knowledge about the tenets of faiths, you treat a critical failure as a failure instead.',
+                                         'Courtly Graces' : 'You either were raised among the nobility or have learned proper etiquette and bearing as well as noble lineages, allowing you to present yourself as a member of the nobility. You can use the Recall Knowledge action with Society to gain useful facts about these topics, using the DC for Nobility Lore if it is lower, and you can use your Society modifier on all Nobility Lore checks. If you want to impersonate a specific noble or create a false noble backstory for yourself, you still need to additionally use Deception when presenting yourself in your noble persona.',
+                                         'Cultural Familiarity' : 'You’ve spent most of your life surrounded by people of a single ancestry and know how to get along with creatures of that ancestry whenever it’s necessary or expedient to do so. Choose one human ethnicity or one of the following ancestries: dwarf, elf, gnome, goblin, or halfling. You gain a +1 circumstance bonus to Diplomacy checks and Performance checks targeting creatures of that ethnicity or ancestry, and to Society checks to Recall Knowledge about that ethnicity or ancestry. The GM might allow you to choose other cultures instead.',
+                                         'Multilingual' : 'It’s easy for you to pick up new languages. You learn two new languages, chosen from common languages, uncommon languages, and any others you have access to. These languages take the same form (signed or spoken) as your other languages. Special You can select this feat multiple times. Each time, you learn two new languages.',
+                                         'Read Lips' : 'You can read the lips of others nearby who you can clearly see. When you’re at your leisure, you can do this automatically. In encounter mode or when attempting a more difficult feat of lip reading, you are fascinated and flat-footed during each round in which you focus on the lip movements, and you must succeed at a Society check (DC determined by the GM) to successfully read someone’s lips in such circumstances. If you are deaf or hard of hearing and have Read Lips, you recognize the lip movements for the spoken form of your languages. You can also speak the spoken form of your languages clearly enough for others to understand you, so long as you can produce sound vocally.',
+                                         'Sign Language' : 'You learn the sign languages associated with the languages you know, allowing you to both sign and understand signs in each of those languages.',
+                                         'Streetwise' : 'You know about life on the streets and feel the pulse of your local settlement. You can use your Society bonus instead of your Diplomacy bonus to Gather Information. In any settlement you frequent regularly, you can use the Recall Knowledge action with Society to know the same sorts of information that you could discover with Diplomacy to Gather Information. The DC is usually significantly higher, but you know the information without spending time gathering it. If you fail to recall the information, you can still subsequently attempt to Gather Information normally.',
+                                         'Experienced Smuggler' : 'You often smuggle things past the authorities. When the GM rolls your Stealth check to see if a passive observer notices a small item you have concealed, she uses the number rolled or 10, whichever is higher. If you’re a master in Stealth, she uses the number rolled or 15, and if you’re legendary in Stealth, you automatically succeed at hiding a small concealed item from a passive observer. This provides no benefits when a creature attempts a Perception check while actively searching you for hidden items. Due to your skill at smuggling, you are more likely to find more lucrative smuggling tasks when using Underworld Lore to Practice a Trade.',
+                                         'Terrain Stalker' : 'Select one type of difficult terrain from the following list: underbrush, reeds, rubble, or snow. While unseen by all non-allies in that type of terrain, you can Sneak without the need to attempt a Stealth check as long as you move no more than 5 feet and are not within 10 feet of an enemy at any point during your movement. Special You can select this feat multiple times. Each time, choose a different type of terrain.',
+                                         'Forager' : 'While Surviving in the Wilderness during downtime, you can always find enough food and water to provide yourself a subsistence living (provided you aren’t in an area that’s completely lacking in appropriate resources). If you are trained but not better, finding food and water for another or providing a comfortable living still requires you to attempt Survival checks and hope for a critical success; on any other successful result, you still find only enough for your own subsistence. If you’re an expert, even without rolling you can always find enough food and water for your own comfortable living or subsistence living for yourself and one other creature that eats roughly as much as a human, and on a critical success you find enough for a second additional creature. If you’re a master, you can always find enough for comfortable living for yourself and one other or subsistence living for yourself and two others without rolling, and you can provide for twice as many others on a critical success. If you’re legendary, you can always find enough for comfortable living for yourself and four others or subsistence living for yourself and eight others without rolling, but a critical success provides no additional benefit. Multiple smaller creatures or creatures with significantly smaller appetites than a human are counted as a single creature for this feat, and larger creatures or those with significantly greater appetite each count as multiple creatures. The GM determines how much a particular non-human creature needs to eat.',
+                                         'Survey Wildlife' : 'You can spend 10 minutes assessing the area around you to find out what animals are nearby, based on nests, scat, and marks on vegetation. Attempt a Survival check against a DC determined by the GM. Success You identify one or two types of animals that live in the environment, and you find tracks you can follow if you want to seek one out. If you have the master proficiency rank in Survival, you can also identify one type of more intelligent and dangerous beast in the environment. Critical Success You identify three or four types of animals that live in the environment, and you find tracks you can follow if you want to seek one out. If you have the master proficiency rank in Survival, you can also identify one type of more intelligent and dangerous beast in the environment.',
+                                         'Pickpocket' : 'You can Palm or Steal Objects that are closely guarded, such as an object in a creature’s pocket or a loose ring. You can’t steal objects that are actively wielded or that would be extremely noticeable or time-consuming to remove (like worn shoes or armor). If you’re a master in Thievery, you can attempt to steal from a creature even if it’s in combat or otherwise on guard. When you’re doing so, Stealing an Object requires 2 manipulate actions instead of 1.',
+                                         'Subtle Theft' : 'When you successfully Steal an Object, observers (other than the creature you stole from) take a –2 circumstance penalty to their Perception DCs to detect your theft. Additionally, if you first Create a Diversion using Deception, taking a single Palm an Object or Steal an Object action doesn’t end your unseen condition.'},
+                                    2 : {'Automatic Knowledge' : 'You know basic facts off the top of your head. Choose a skill you’re an expert in that has the Recall Knowledge action and that you have the Assurance feat in when you first select this feat. You can use the Recall Knowledge action for that skill as a free action once per round, triggering at either the start or the end of your turn; if you do, you must use Assurance on the skill check. Special You can select this feat multiple times. Each time you do, you choose a different skill and gain the benefits for the chosen skill.',
+                                         'Magical Shorthand' : 'Learning new spells comes easily to you. Choose arcane, divine, occult, or primal; you can choose a magic tradition only if you are an expert in the associated skill. You take only 10 minutes per spell level to learn a spell of that type, rather than 1 hour per spell level. If you fail to learn a spell of that type, you can try to learn it again after 1 week or after you gain a level, whichever comes first. If you’re a master in the chosen type of magic’s associated skill, learning a spell takes only 5 minutes per spell level, and if you’re legendary in that skill, it takes only 1 minute per spell level. Special You can select this feat multiple times. Each time you do so, select a different magic tradition in whose associated skill you are an expert.',
+                                         'Nimble Crawl' : 'You’re skilled at moving around while prone. You can Crawl up to half your Speed, rather than 5 feet. If you’re a master in Acrobatics, you can Crawl at your full Speed, and if you’re legendary, you aren’t flat-footed while prone.',
+                                         'Quick Squeeze' : 'When you succeed at the Squeeze action, you can move 5 feet per round instead of 5 feet per minute. On a critical success, you can Squeeze 10 feet per round.',
+                                         'One-Handed Climber' : 'You can Climb even if one of your hands is occupied. You must still have one hand and both legs available in order to Climb.',
+                                         'Powerful Leap' : 'When you use the Leap action, you can jump 5 feet up with a vertical Leap, and you increase the distance you can jump horizontally by 5 feet.',
+                                         'Rapid Mantel' : 'When you perform a Leap and grab the edge of a surface, you can immediately pull yourself up onto that surface into a standing position as part of your action. If you’re a master in Athletics, you can also pull yourself up as part of a successful Grab Edge reaction.',
+                                         'Magical Crafting' : 'You can use the Craft activity to create magic items in addition to mundane ones. Many magic items have special crafting requirements, such as access to certain spells, as listed in the item entry in Chapter 11 of the PHB. When you select this feat, you gain the formulas for four common magic items of level 2 or lower.',
+                                         'Confabulator' : 'Even after you are caught in falsehoods, you pile lie upon lie. Reduce the bonus a target gets for your previous attempts to Create a Diversion or Lie to it from +4 to +2. If you’re a master in Deception, reduce the bonus to +1. If you’re legendary in Deception, your web of lies is so effective that your targets don’t get these bonuses at all.',
+                                         'Lengthy Diversion' : 'When you critically succeed using Deception to Create a Diversion, you continue to remain only sensed after the end of your turn. This effect lasts for an amount of time depending on the diversion and the situation, as determined by the GM (but for a minimum of 1 additional round). For instance, if Merisiel runs away after throwing a rock in the opposite direction to make noise and achieves a critical success on her Deception check, the guards might continue chasing in the direction of the rock until they either give up pursuit or notice consequences of Merisiel’s later actions.',
+                                         'Lie to Me' : 'You know how to exploit your enemy’s falsehoods to your own advantage in negotiations. When you succeed at an attempt to tell whether someone is hiding something from you (usually with a Seek action) or your target fails a Deception check to Lie to you, you gain a +2 circumstance bonus to your next Deception, Diplomacy, Intimidation, or Performance check against them.',
+                                         'Quick Disguise' : 'You can set up a disguise in half the usual time (generally 5 minutes). If you’re a master, it takes one-fifth the usual time (usually 2 minutes), and if you’re legendary, it takes one-tenth the usual time (usually 1 minute).',
+                                         'Bargain Hunter' : 'You can spend the day Gathering Information specifically about deals on items rather than other information. Name an item or a general category of items (such as “magic weapons”) you’re looking for and then roll your Diplomacy check. Any bonuses you have when Gathering Information apply. The GM sets the DC based on the population of the settlement, the difficulty of finding the easiest-to-find item, how many merchants are in the area, and similar factors. If you choose not to buy the item using a deal right away, the GM determines whether the deal is still good later on. This type of Gather Information action has special outcomes on a success or critical success. You can also use the Practice a Trade activity with Diplomacy instead of the Lore skill, spending your days hunting bargains and reselling at a profit. Success You find a deal on the item you were looking for. You can purchase it at a discount equal to the value of a successful Practice a Trade check for a task of your level (see page 151), to a minimum value of half the item’s Price after the discount. Critical Success You find an incredible deal on the item you were looking for. You can purchase it at a discount equal to the value of a successful Practice a Trade check for a task of 1 level higher than your level (see page 151), to a minimum value of half Price after the discount.',
+                                         'Glad-Hand' : 'First impressions are your strong suit. When you meet someone, you can immediately attempt a Diplomacy check to Make an Impression with a –5 penalty rather than needing to converse for 1 minute. On a success, you don’t gain any further benefit for spending 1 minute in conversation, but if you fail or critically fail, you can engage in 1 minute of conversation and attempt a new check at the end of that time rather than accepting the failure or critical failure result. This functions only when you meet someone in a social situation, not if you encounter them in a hostile situation such as a combat encounter.',
+                                         'Group Coercion' : 'When you use the Coerce activity, you can compare your Intimidation check result to the Will DCs of two targets instead of one. It’s possible to get a different degree of success for each target. The number of targets you can Coerce in a single action increases to five if you’re a master, and 10 if you’re legendary.',
+                                         'Intimidating Prowess' : 'In situations where you can physically menace the target of your Coerce or Demoralize attempts, you gain a +1 circumstance bonus to your Intimidation check and you ignore the penalty for not sharing a language. If your Strength score is 20 or higher and you have the master proficiency rank in Intimidation, this bonus increases to +2.',
+                                         'Lasting Coercion' : 'When you succeed or critically succeed at an attempt to Coerce someone, they help you for up to a week or until their task is complete, as determined by the GM.',
+                                         'Unmistakable Lore' : 'You never get information wrong when it comes to your narrow areas of expertise. When you Recall Knowledge for any Lore subcategory in which you’re trained, you treat a critical failure as a failure.',
+                                         'Robust Recovery' : 'Your physiology is especially strong against diseases and poisons, and you have learned folk medicine that allows you to help others recover from them as well. When you treat a disease or a poison, or someone else uses one of these actions to benefit you, increase the circumstance bonus granted on a success to +4.',
+                                         'Bonded Animal' : 'You can spend 7 days of downtime with a normal animal (not a companion, familiar, or other special animal) attempting to bond with it. At the end of the 7 days, attempt a DC 20 Nature check: if you succeed, you form a bond with the animal. Bonding with a new animal ends any previous bond you had. You can’t have both a bonded animal and an animal companion (or have a bonded animal that is also an animal companion). During combat, you can give an orders to your bonded animal more easily. You can use the Command an Animal action as a free action triggered after your first Handle an Animal action of the round.',
+                                         'Natural Medicine' : ' You can spend 10 minutes applying natural cures to heal a creature, after which you must attempt a DC 20 Nature check. On a success, the target regains Hit Points equal to 1d8 plus your Wisdom modifier. If you’re a master of Nature, the target regains an additional 1d8 Hit Points. You can use this feat to heal a particular creature only once per day. If you’re in the wilderness, you might have easier access to fresh ingredients, allowing you to restore an additional 1d8 Hit Points on a success or critical success, subject to the GM’s determination.',
+                                         'Impressive Performance' : 'Your performances move hearts and win you fans wherever you go. You can Make an Impression using Performance instead of Diplomacy.',
+                                         'Connections' : 'You have social connections you can leverage to trade favors or meet important people. Whenever you’re in an area where you have connections (typically in a settlement where you’ve spent downtime building connections, or possibly in another settlement in the same nation), you can attempt a Society check to either arrange a meeting with an important political figure or attempt to get a favor in exchange for a later favor of your contact’s choice. The GM decides the DC of the Society check based on the difficulty of the favor and the prominence of the figure.',
+                                         'Quiet Allies' : 'You’re skilled at helping your allies minimize the noise and glare of their armor. While an ally is within 30 feet of you, their check penalty to Stealth checks from armor is reduced by 2. This doesn’t stack with benefits from another character with Quiet Allies or any other ability that reduces check penalties from armor.',
+                                         'Experienced Tracker' : 'Tracking is second nature to you, and when necessary you can follow a trail without pause. You can Track while moving at full Speed by taking a –5 penalty to your Survival check. If you’re a master in Survival, you don’t take the –5 penalty. If you’re legendary in Survival, you no longer need to roll a new Survival check every hour when tracking, though you still need to roll whenever there are significant changes in the trail.',
+                                         'Wary Disarmament' : 'If you trigger a device or set off a trap while disarming it, you gain a +2 circumstance bonus to your AC or saving throw against the device or trap. This applies only to attacks or effects triggered by your failed attempt, not to any later ones, such as additional attacks from a complex trap.'},
+                                    7 : {'Quick Recognition' : 'You can Recognize Spells swiftly. Once per round, you can use Quick Recognition to use the Recognize a Spell feat using a skill in which you are a master as a free action instead of a reaction.',
+                                         'Kip Up' : 'You stand back up. This movement doesn’t trigger reactions.',
+                                         'Quick Climb' : 'When Climbing, you move at half your Speed on a success and at full Speed on a critical success. This doesn’t affect you if you’re using a climb Speed.',
+                                         'Quick Swim' : 'When swimming, you move 5 more feet on a success and 10 more feet on a critical success, to a maximum of your land Speed.',
+                                         'Wall Jump' : 'If you’re adjacent to a wall at the end of a jump (whether performing a High Jump, Long Jump, or Leap), you don’t fall as long as your next action is another jump. Your previous jump counts as moving on the ground before your second jump, provided you moved at least 10 feet. You can wall jump only once in a turn, unless you’re legendary in Athletics, in which case you can wall jump as many times as you can use consecutive jump actions in that turn.',
+                                         'Inventor' : 'You are a genius at Crafting, easily able to determine how things are made and create new inventions. You can spend downtime to invent a common formula that you don’t know. This works just like the Craft skill: you spend a number of days in preparation and half the Price of the formula up front, roll a Crafting check, and on a success either finish the formula by paying the difference or work for longer to decrease the Price. The difference is that you spend the additional time in research, design, and development, rather than in creating an item.',
+                                         'Cruel Deceiver' : 'You’ve mastered the art of distracting your foes to leave them exposed to your attack. When you Create a Diversion, if you use a Strike action, you remain unseen until after the end of the action, instead of becoming seen before the action.',
+                                         'Slippery Secrets' : 'Spells that attempt to read your mind, detect whether you are lying, or reveal your alignment must succeed at a spell roll against your Deception DC or they reveal nothing.',
+                                         'Shameless Request' : 'You can downplay the potential consequences or outrageousness of your requests through sheer brazenness and charm. When Requesting something, you treat a critical failure as a failure.',
+                                         'Battle Cry' : 'When you roll initiative, as long as you can perceive at least one foe, you can yell a mighty battle cry and Demoralize a foe as a free action. If you have legendary Intimidation, you can also Demoralize as a reaction when you succeed or critically succeed at an attack.',
+                                         'Foil Senses' : 'You are adept at foiling creatures’ special senses and paranoid enough to take precautions against all of them at all times. Whenever you use the Hide or Sneak actions, you are always considered to be taking precautions against special senses.',
+                                         'Swift Sneak' : 'You can move your full Speed when you Sneak. You can use Swift Sneak while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type.',
+                                         'Planar Survival' : 'You can attempt to Survive in the Wild on different planes, even those without the resources or natural phenomena you normally need. For instance, you can forage for food even if the plane lacks food that could normally sustain you, and you could find your bearings on a plane that doesn’t have stars, a sun, or other normal aids to navigation. A success at Surviving in the Wild can reduce the plane’s damage as well, at the GM’s discretion.',
+                                         'Quick Unlock' : 'When you succeed at a check to Pick a Lock, you gain two successes instead of one. When you critically succeed at such a check, you gain three successes instead of two.',
+                                         'Spell Thievery' : 'If you use Palm an Object or Steal an Object on a scroll, spellbook, or similar item, you can remove the magical writing without disturbing the parchment or other surface it was inscribed upon. When you do, you must have a blank scroll or page in your possession that you can transfer the magical writing onto, or else the magic is expended and lost. The GM usually applies a penalty to observers’ Perception checks and DCs to notice the theft, unless the writing is on open display (in the case of an unfurled scroll, for example). You gain a +2 circumstance bonus to your check because you don’t need to collect the entire object. However, higher-level magic is harder to steal, so the DC is increased by the spell’s level.'},
+                                    15 :{'Legendary Contortionist' : 'When you successfully Squeeze, you move through the tight space at full Speed.',
+                                         'Legendary Climber' : 'You gain a climb Speed equal to your Speed.',
+                                         'Legendary Swimmer' : 'You move through the water like a fish, gaining a swim Speed equal to your land Speed.',
+                                         'Impeccable Craft' : 'Whenever you succeed at a Crafting check to make an item of the type you chose with Specialty Crafting, you gain the effect of a critical success instead.',
+                                         'Legendary Impersonator' : 'You set up a full disguise with which you can Impersonate someone with incredible speed.',
+                                         'Scare to Death' : 'Attempt an Intimidation check against the Will DC of a living creature within 30 feet of you that you sense or see and who can sense or see you. If the target does not understand the language you are speaking, or it can’t hear you, you take a –4 circumstance penalty to the check. A creature subjected to this action becomes bolstered against all Scare to Death actions.Success The target becomes frightened 2 and is fleeing for 1 round. Critical Success The target must succeed at a Fortitude save against your Intimidation DC or die. On a successful save, the target is frightened 2 and fleeing for 1 round. Failure The target is frightened 1. Critical Failure The target is unaffected.',
+                                         'Legendary Professional' : 'Your fame in your chosen lore has spread throughout the lands (for instance, if you have Warfare Lore, you might be a legendary general or tactician). An NPC who succeeds at a DC 10 Society check to Recall Knowledge has heard of you, and when you Practice a Trade with that Lore skill, you can typically find higher-level tasks, as determined by the GM.',
+                                         'Legendary Medic' : 'You’ve invented new medical procedures or discovered ancient techniques that can achieve nearly miraculous results. Once per day for each target, you can spend 1 hour treating the target and attempt a Medicine check to remove a disease or the blinded, deafened, drained, or enervated condition. Use the DC of the disease or of the spell or effect that created the condition. If the effect’s source is an artifact, a creature above 20th level, or other similarly powerful source, increase the DC by 5.',
+                                         'Legendary Performer' : 'Your fame as a performer of the type you chose with Virtuosic Performer has spread throughout the lands. An NPC who succeeds at a DC 10 Society check to Recall Knowledge has heard of you, and whenever you Stage a Performance, you can typically attract higher-level audiences to your performance, as determined by the GM.',
+                                         'Legendary Codebreaker' : 'Your skill with languages and codes is so great that you can decipher information with little more than a quick read through a text. You can Decipher Writing while reading at normal speed. If you slow down and spend the full amount of time that’s ordinarily required, treat a success as a critical success; if you critically succeed while spending the normal amount of time, you gain a nearly word-for-word understanding of the document.',
+                                         'Legendary Linguist' : 'You are so skilled with languages that you can create pidgin languages instantly to communicate. You can always talk to any creature that has a language, even one you don’t share, in very simple terms and conveying only basic concepts, using a new pidgin language of your own creation. You must first understand at least the basic medium of communication the creature uses (speech, sign language, and so on).',
+                                         'Legendary Negotiatior' : 'You use your incredible skill at persuasion to negotiate quickly in adverse situations. You attempt to Make an Impression and then immediately Request that your opponent cease their current activity and engage in negotiations. The GM sets the DC of the Request based on the circumstances; some creatures might simply refuse, and even those who agree might ultimately find your arguments lacking.' ,
+                                         'Legendary Sneak' : 'When you employ an exploration tactic other than sneaking, you also gain the benefits of the sneaking tactic unless you choose not to.',
+                                         'Legendary Survivalist' : 'You can survive indefinitely without food or water and can endure severe and extreme cold and heat without taking damage from doing so.',
+                                         'Legendary Thief' : 'Your ability to steal items defies belief. You can attempt to Steal an Object that is actively wielded or that would be extremely noticeable or time-consuming to remove (like worn shoes or armor). You must do so slowly and carefully, spending at least 1 minute and significantly longer for items that are normally time-consuming to remove (like armor). Throughout this duration you must have some means of staying hidden, whether under cover of darkness or in a bustling crowd, for example. You take a –5 penalty on your Thievery check. Even if you succeed, if the item is extremely prominent, like a suit of full plate armor, onlookers will quickly notice it’s gone after you steal it.'} }
+                }
