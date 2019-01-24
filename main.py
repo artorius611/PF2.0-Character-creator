@@ -187,6 +187,9 @@ valid_user_input = "false"
 while valid_user_input == "false" :
     if choice == '1' :
         valid_user_input = "true"
-        user_back = Background.Acolyte (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed, dwarf)
-print ('Your Health is:', user_back.health, '\nYour Speed is: ', b.speed, 'ft.') 
-print ('STR:', b.strength, '\n Dex', b.dexterity, '\n Con', b.constitution, '\n Int', b.intelligence, '\n Wis', b.wisdom, '\n Cha', b.charisma, '\nYour heritage:\n',  b.heritage_bonus)
+        user_back = Background.Acolyte (strength, dexterity, constitution, intelligence, wisdom, charisma, health, speed)
+    else:
+        print('\n \n You selected something invalid\n \n')
+user_current = user_race.strength + user_back.strength, user_race.dexterity + user_back.dexterity, user_race.constitution + user_back.constitution, user_race.intelligence + user_back.intelligence, user_race.wisdom + user_back.wisdom, user_race.charisma + user_back.charisma
+print ('Your Health is:', user_race.health, '\nYour Speed is: ', user_race.speed, 'ft.') 
+print ('STR:', user_back.strength, '\n Dex', user_back.dexterity, '\n Con', user_back.constitution, '\n Int', user_back.intelligence, '\n Wis', user_back.wisdom, '\n Cha', user_back.charisma, '\nYour background:\n', Ancestry.Character_Feats['skill feats']['Background'])
